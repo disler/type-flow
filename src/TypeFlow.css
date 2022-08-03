@@ -28,7 +28,9 @@
 
 
 .letter-focused {
-    color: #ff4998
+    color: #ff4998;
+    font-weight: bold;
+    font-size: 2em;
 }
 .letter-valid {
     color: #01cc74

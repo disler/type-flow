@@ -9,6 +9,7 @@ import { wordsAtom } from "../store/store";
 export const TypeFlow = () => {
 
     const {words, setWords, processKeyboardInput, generateWords, wordIndexCursor} = useWords()
+    
 
     const typeflowRef = useRef<HTMLDivElement>(null)
 
@@ -23,6 +24,10 @@ export const TypeFlow = () => {
             window.removeEventListener("keyup", keyPressed)
         }
     }, [words, wordIndexCursor]);
+
+    useEffect(() => {
+        setInterval
+    }, []);
 
 
     const keyPressed = (e: KeyboardEvent) => {

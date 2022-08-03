@@ -26,7 +26,7 @@ function generateNewWord(word: string, index: number): Word {
 }
 
 function atEndOfWord(word: Word): boolean {
-    return word.letterIndexCursor === word.letters.length - 1
+    return word.letterIndexCursor >= word.letters.length - 1
 }
 
 function atBeginningOfWord(word: Word): boolean {
@@ -131,11 +131,46 @@ export default function useWords() {
 
         const currentWord = words[wordIndexCursor]
 
+        console.log(`currentWord`, currentWord)
+
+        console.log(`atEndOfWord(currentWord`, atEndOfWord(currentWord))
+        
         if (atEndOfWord(currentWord)) {
-            validateWord(currentWord)
+            console.log(`currentWord`, currentWord)
+
             const newWordIndexCursor = wordIndexCursor + 1
+
+            const isValid = currentWord.letters.every(letter => letter.state === "valid")
+
+            const updatedWords: Word[] = words.map(w => {
+                if (w.index === currentWord.index) {
+                    return {
+                        ...w,
+                        state: isValid ? "valid" : "invalid"
+                    }
+                }
+                if (w.index === currentWord.index + 1) {
+                    const updatedLetters: Letter[] = w.letters.map((_letter, ltrIndex) => {
+                        if (ltrIndex === 0) {
+                            return {
+                                ..._letter,
+                                state: "focused"
+                            }
+                        }
+                        return _letter
+                    })
+                    return {
+                        ...w,
+                        letters: updatedLetters,
+                        state: "idle"
+                    }
+                }
+                return w
+            })
+
+            setWords(updatedWords)
+
             setWordIndexCursor(newWordIndexCursor)
-            updateLetterState(words[newWordIndexCursor], 0, "focused")
 
             return
         }
@@ -192,10 +227,10 @@ export default function useWords() {
         // if the word is complete, validate the word, increment the word cursor
         if (updatedWord.letterIndexCursor === updatedWord.letters.length) {
             
-            const validated = validateWord(updatedWord)
-            if (validated) {
-                updateWordIdxAndLetter(currentWord, newLetterState, false)
-            }
+            // const validated = validateWord(updatedWord)
+            // if (validated) {
+                // updateWordIdxAndLetter(currentWord, newLetterState, false)
+            // }
         }
     }
 
