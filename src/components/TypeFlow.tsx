@@ -50,7 +50,6 @@ export const TypeFlow = () => {
         if (firstKeyPress === false) {
             setFirstKeyPress(true)
             setComplete(false)
-            console.log(`set key to true`)
         }
         processKeyboardInput(e)
     }
