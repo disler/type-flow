@@ -2,4 +2,4 @@ export const WORD_BANK = ["account", "act", "addition", "adjustment", "advertise
 
 export const TOTAL_WORDS_TO_GENERATE = WORD_BANK.length * 5
 
-export const DEFAULT_SECONDS = 10
+export const DEFAULT_SECONDS = 60
