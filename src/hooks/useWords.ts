@@ -10,6 +10,8 @@ import { getRandomFromList } from "../modules/random"
 import { useEffect, useState } from "react"
 import useStats from "./useStats"
 
+// ----- HELPER FUNCTIONS -----
+
 function generateNewWord(word: string, index: number): Word {
     
     const letters: Letter[] = word.split("").map((letter, i) => ({
@@ -37,9 +39,15 @@ function atBeginningOfWord(word: Word): boolean {
 
 export default function useWords() {
 
+    // ----- STATE -----
+
     const [words, setWords] = useAtom(wordsAtom)
     const [wordIndexCursor, setWordIndexCursor] = useAtom(wordIndexCursorAtom)
     const {addCorrectWord, addMistake, addTotalWords} = useStats()
+
+
+    // ----- FUNCTIONS -----
+
 
     function resetWords(): void {
         generateWords()
@@ -187,10 +195,6 @@ export default function useWords() {
         
         updateWordIdxAndLetter(currentWord, 'invalid', true)
 
-        incrementMistake()
-    }
-
-    function incrementMistake(): void {
         addMistake()
     }
 
@@ -218,7 +222,7 @@ export default function useWords() {
         const currentWord = words[wordIndexCursor]
 
         if (currentWord.letterIndexCursor === currentWord.letters.length) {
-            incrementMistake()
+            addMistake()
             return
         }
 
@@ -228,7 +232,7 @@ export default function useWords() {
         const newLetterState = currentLetter.letter !== letter ? "invalid" : "valid"
 
         if (newLetterState === "invalid") {
-            incrementMistake()
+            addMistake()
         }
 
         updateWordIdxAndLetter(currentWord, newLetterState, true)

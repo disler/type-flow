@@ -1,10 +1,7 @@
 import useWords from "../hooks/useWords";
 import { WordComponent } from "./WordComponent";
 import "../TypeFlow.css"
-import { useCallback, useEffect, useRef, useState } from "react";
-import { KeyPressType } from "../types";
-import { useAtom } from "jotai";
-import { wordsAtom } from "../store/store";
+import { useEffect, useRef, useState } from "react";
 import useApp from "../hooks/useApp";
 import { DEFAULT_SECONDS } from "../modules/defaults";
 import useStats from "../hooks/useStats";
@@ -13,7 +10,7 @@ export const TypeFlow = () => {
 
     // ------- STATE ----------
 
-    const {words, setWords, processKeyboardInput, generateWords, wordIndexCursor, resetWords} = useWords()
+    const {words, processKeyboardInput, generateWords, wordIndexCursor, resetWords} = useWords()
     const {subHeader, setSubHeader, } = useApp() 
     const {resetStats, stats} = useStats()
 
