@@ -1,17 +1,15 @@
 import {useAtom} from "jotai"
-import {subHeaderAtom, countdownTimerAtom} from "../store/store"
+import {subHeaderAtom, countdownTimerAtom, firstKeyPressAtom} from "../store/store"
 
 export default function useApp() {
     const [subHeader, setSubHeader] = useAtom(subHeaderAtom)
-    const [countdownTimer, setCountdownTimer] = useAtom(countdownTimerAtom)
-
-
+    const [firstKeyPress, setFirstKeyPress] = useAtom(firstKeyPressAtom)
 
 
     return {
         subHeader,
         setSubHeader,
-        countdownTimer, 
-        setCountdownTimer,
+        firstKeyPress,
+        setFirstKeyPress
     }
 }

@@ -9,9 +9,6 @@ import { Provider } from 'jotai'
 
 function App() {
 
-  const {subHeader} = useApp() 
-
-
   return (
     <Provider>
       <div className="App">
@@ -19,7 +16,6 @@ function App() {
           ⌨️
         </div>
         <h1>TypeFlow</h1>
-        <h2>{subHeader}</h2>
 
         <TypeFlow />
       </div>

@@ -1,6 +1,6 @@
 .typeflow-w {
     width: 80vw;
-    height: 30vh;
+    height: 40vh;
     min-height: 300px;
     margin: 0 auto;
     position: relative;
@@ -9,7 +9,7 @@
     background: #333;
     padding: 15px;
     font-size: 1.5em;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .word-w {
@@ -37,4 +37,15 @@
 }
 .letter-invalid {
     color: #ff2222;
+}
+
+.complete-w {
+    margin: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+h2 {
+    font-size: 2em;
 }

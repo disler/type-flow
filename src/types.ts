@@ -22,7 +22,5 @@ export interface Stats {
     wordsPerMinute: number;
     numberOfMistakes: number;
     correctWordCount: number;
-
-    charactersPerMinute: number;
-    accuracy: number;
+    totalWords: number;
 }

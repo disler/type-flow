@@ -7,7 +7,8 @@ import {useAtom} from "jotai"
 import {wordIndexCursorAtom, wordsAtom} from "../store/store"
 import { KeyPressType, Letter, LetterState, Word, WordState } from "../types"
 import { getRandomFromList } from "../modules/random"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import useStats from "./useStats"
 
 function generateNewWord(word: string, index: number): Word {
     
@@ -38,9 +39,14 @@ export default function useWords() {
 
     const [words, setWords] = useAtom(wordsAtom)
     const [wordIndexCursor, setWordIndexCursor] = useAtom(wordIndexCursorAtom)
+    const {addCorrectWord, addMistake, addTotalWords} = useStats()
+
+    function resetWords(): void {
+        generateWords()
+        setWordIndexCursor(0)
+    }
     
     function generateWords(): void {
-        console.log(`GENERATE NEW WORDS`)
 
         let newWordList = []
 
@@ -131,22 +137,19 @@ export default function useWords() {
 
         const currentWord = words[wordIndexCursor]
 
-        console.log(`currentWord`, currentWord)
+        const isWordCorrect = currentWord.letters.every(letter => letter.state === "valid")
 
-        console.log(`atEndOfWord(currentWord`, atEndOfWord(currentWord))
-        
+
+
         if (atEndOfWord(currentWord)) {
-            console.log(`currentWord`, currentWord)
 
             const newWordIndexCursor = wordIndexCursor + 1
-
-            const isValid = currentWord.letters.every(letter => letter.state === "valid")
 
             const updatedWords: Word[] = words.map(w => {
                 if (w.index === currentWord.index) {
                     return {
                         ...w,
-                        state: isValid ? "valid" : "invalid"
+                        state: isWordCorrect ? "valid" : "invalid"
                     }
                 }
                 if (w.index === currentWord.index + 1) {
@@ -172,6 +175,13 @@ export default function useWords() {
 
             setWordIndexCursor(newWordIndexCursor)
 
+            if (isWordCorrect) {
+                addCorrectWord()
+            } else {
+                addTotalWords()
+            }
+
+
             return
         }
         
@@ -181,7 +191,7 @@ export default function useWords() {
     }
 
     function incrementMistake(): void {
-        
+        addMistake()
     }
 
     function moveCurrentLetterIndexCursor(word: Word, newIndexCursor: number): Word {
@@ -221,35 +231,7 @@ export default function useWords() {
             incrementMistake()
         }
 
-        let updatedWord = updateWordIdxAndLetter(currentWord, newLetterState, true)
-
-
-        // if the word is complete, validate the word, increment the word cursor
-        if (updatedWord.letterIndexCursor === updatedWord.letters.length) {
-            
-            // const validated = validateWord(updatedWord)
-            // if (validated) {
-                // updateWordIdxAndLetter(currentWord, newLetterState, false)
-            // }
-        }
-    }
-
-    function validateWord(word: Word): boolean {
-        const isValid = word.letters.every(letter => letter.state === "valid")
-
-        const updatedWords: Word[] = words.map(w => {
-            if (w.index === word.index) {
-                return {
-                    ...w,
-                    state: isValid ? "valid" : "invalid"
-                }
-            }
-            return w
-        })
-
-        setWords(updatedWords)
-
-        return isValid
+        updateWordIdxAndLetter(currentWord, newLetterState, true)
     }
 
     function updateLetterState(word: Word, letterIndex: number, letterState: LetterState): Word {
@@ -324,9 +306,6 @@ export default function useWords() {
 
         const keyPressType: KeyPressType = isLetterKey ? "letter" : isSpace ? "space" : isBackspace ? "backspace" : "other"
 
-        console.log(`key`, key)
-        console.log(`keyPressType`, keyPressType)
-
         if (keyPressType === 'other') {
             return
         }
@@ -346,6 +325,7 @@ export default function useWords() {
     }
 
     return {
+        resetWords,
         generateWords,
         words,
         processKeyboardInput,
