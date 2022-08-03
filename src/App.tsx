@@ -1,33 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
+import useApp from "./hooks/useApp"
+import { TypeFlow } from './components/TypeFlow'
+import useWords from './hooks/useWords'
+import { Provider } from 'jotai'
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const {subHeader} = useApp() 
+
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Provider>
+      <div className="App">
+        <div style={{fontSize: "200px"}}>
+          ⌨️
+        </div>
+        <h1>TypeFlow</h1>
+        <h2>{subHeader}</h2>
+
+        <TypeFlow />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    </Provider>
   )
 }
 

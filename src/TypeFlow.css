@@ -1,0 +1,38 @@
+.typeflow-w {
+    width: 80vw;
+    height: 30vh;
+    min-height: 300px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    background: #333;
+    padding: 15px;
+    font-size: 1.5em;
+    overflow-y: auto;
+}
+
+.word-w {
+    margin-right: 10px;
+}
+
+.word-focused {
+    background: #555;
+}
+.word-valid {
+    background: #01cc7455;
+}
+.word-invalid {
+    background: #ff222233;
+}
+
+
+.letter-focused {
+    color: #ff4998
+}
+.letter-valid {
+    color: #01cc74
+}
+.letter-invalid {
+    color: #ff2222;
+}
